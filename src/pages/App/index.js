@@ -1,9 +1,9 @@
 /*
- * @Author: your name
+ * @Author: levin
  * @Date: 2022-02-02 11:23:42
- * @LastEditTime: 2022-02-02 17:31:38
+ * @LastEditTime: 2022-02-02 21:02:54
  * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: App logic entry
  * @FilePath: /broccoli/src/containers/App/index.js
  */
 import { HashRouter, Route, Routes, Navigate } from 'react-router-dom';
