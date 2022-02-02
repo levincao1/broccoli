@@ -1,24 +1,47 @@
 /*
- * @Author: your name
+ * @Author: levin
  * @Date: 2022-02-02 12:08:06
- * @LastEditTime: 2022-02-02 13:39:57
+ * @LastEditTime: 2022-02-02 17:28:19
  * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: Home page
  * @FilePath: /broccoli/src/pages/Home/index.js
  */
 import { Component } from 'react';
-// import Header from '../../components/Header';
-// import Footer from '../../components/Footer';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actions as authActions, getShowInvite, getLoggedUser } from "../../redux/modules/app";
+import './Home.scss';
 
 class Home extends Component {
-    render () {
+    constructor(props) {
+        super(props);
+    }
+    handleShowInvite = e => {
+        e.preventDefault();
+        if (this.props.isInvite) {
+            return;
+        }
+        this.props.showInvite(true);
+    }
+
+    render() {
         return (
-            <div>
-              <div> A better way to enjoy every day.</div>
-              <div> Be the first to know when we launch.</div>
-              <button>Request an invite</button>
+            <div className="page-home">
+                <h1 className="txt-title"> A better way <br /> to enjoy every day.</h1>
+                <p className="txt-desc"> Be the first to know when we launch.</p>
+                <button className="btn-invite" onClick={this.handleShowInvite}>Request an invite</button>
             </div>
         );
     }
 }
-export default Home;
+const mapStateToProps = (state, props) => {
+    return {
+        isInvite: getShowInvite(state)
+    };
+}
+const mapDispatchToProps = dispatch => {
+    return {
+        ...bindActionCreators(authActions, dispatch)
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

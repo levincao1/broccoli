@@ -1,21 +1,26 @@
 .app {
     height:100%;
+    width:100%;
     header, footer {
         width:100%;
         position:fixed;
-        left:0;
+        // left:0;
     }
     header {
-        height: 14vmin;
+        height: 12vmin;
         top:0;
     }
     footer {
-        height: 14vmin;
+        height: 12vmin;
         bottom:0;
     }
     .view-container{
-        height:calc(100% - 14vmin);
-        border:solid 1px blue;
-        padding:14vmin 0;
+        width:100%;
+        height:calc(100% - 24vmin);
+        // border:solid 1px blue;
+        position:absolute;
+        top: 12vmin;
+        left:0;
+        overflow: hidden;
     }
 }

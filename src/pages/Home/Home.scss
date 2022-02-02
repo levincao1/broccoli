@@ -1,0 +1,21 @@
+.page-home {
+    // border: solid 1px red;
+    height:100%;
+    width:100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    .txt-title {
+        font-size: $font-60;
+        text-align: center;
+    }
+    .txt-desc{
+        margin:1.4rem 0;
+        font-size: $font-nm;
+    }
+    .btn-invite{
+        font-size: $font-18;
+        padding:10px 12px;
+    }
+}
