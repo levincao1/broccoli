@@ -1,16 +1,20 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 11:42:14
- * @LastEditTime: 2022-02-02 17:36:14
+ * @LastEditTime: 2022-02-02 22:23:45
  * @LastEditors: Please set LastEditors
  * @Description: App reducer
  * @FilePath: /broccoli/src/redux/modules/app.js
  */
 import Immutable from 'immutable';
+import { invite as reqInvite } from './../../api/invite';
 
 const initalState = Immutable.fromJS({
     requestQuantity: 0,
     isInvite: false,
+    userName: '',
+    email: '',
+    inviteSuccess: false,
     error: null
 });
 
@@ -21,7 +25,10 @@ export const types = {
     SET_ERROR: 'APP/SET_ERROR',
     REMOVE_ERROR: 'APP/REMOVE_ERROR',
     SHOW_INVITE: 'APP/SHOW_INVITE',
-    CLOSE_INVITE: 'APP/CLOSE_INVITE'
+    CLOSE_INVITE: 'APP/CLOSE_INVITE',
+    INVITE: 'APP/INVITE',
+    INVITE_SUCCESS: 'APP/INVITE_SUCCESS'
+
 };
 
 // action creators
@@ -42,7 +49,24 @@ export const actions = {
     showInvite: (isInvite) => ({
         type: types.SHOW_INVITE,
         isInvite
-    })
+    }),
+    inviteSuccess: (inviteSuccess) => ({
+        type: types.INVITE_SUCCESS,
+        inviteSuccess
+    }),
+    sendInvite: (userName, email) => {
+        return dispatch => {
+            dispatch(startRequest());
+            const params = {userName, email};
+            return reqInvite(params).then(data => {
+                if(!data.error){
+                    dispatch(actions.inviteSuccess(data.status === 200));
+                    return;
+                }
+                dispatch(actions.setError(data.error));
+            })
+        }
+    }
 }
 
 // reducers
@@ -60,6 +84,8 @@ const reducer = (state = initalState, action) => {
             return state.merge({ isInvite: action.isInvite});
         case types.CLOSE_INVITE:
             return state.merge({ isInvite: false});
+        case types.INVITE_SUCCESS:
+            return state.merge({ inviteSuccess: action.inviteSuccess})
         default:
             return state;
     }
@@ -72,6 +98,9 @@ export const getError = state => {
 }
 export const getShowInvite = state => {
     return state.getIn(['app', 'isInvite']);
+}
+export const inviteSuccess = state => {
+    return state.getIn(['app', 'inviteSuccess']);
 }
 
 export const getRequestQuantity = state => {

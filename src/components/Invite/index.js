@@ -1,12 +1,15 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 15:43:58
- * @LastEditTime: 2022-02-02 20:55:36
+ * @LastEditTime: 2022-02-02 22:07:06
  * @LastEditors: Please set LastEditors
  * @Description: Login component
  * @FilePath: /broccoli/src/components/Login/index.js
  */
 import React, { Component } from 'react';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { actions, getError } from "../../redux/modules/app";
 import './Invite.scss';
 class Invite extends Component {
     constructor(props){
@@ -58,6 +61,7 @@ class Invite extends Component {
             this.confirmEmail.focus();
             return;
         }
+        this.props.Invite(userName, email);
     }
 
     render() {
@@ -76,4 +80,16 @@ class Invite extends Component {
         );
     }
 }
-export default Invite;
+
+const mapStateToProps = (state, props) => {
+    return {
+      error: getLoggedUser(state)
+    };
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      ...bindActionCreators(actions, dispatch)
+    };
+  };
+export default connect(mapStateToProps, mapDispatchToProps)(Invite);
