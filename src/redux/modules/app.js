@@ -1,13 +1,13 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 11:42:14
- * @LastEditTime: 2022-02-02 22:23:45
+ * @LastEditTime: 2022-02-03 21:29:46
  * @LastEditors: Please set LastEditors
  * @Description: App reducer
  * @FilePath: /broccoli/src/redux/modules/app.js
  */
 import Immutable from 'immutable';
-import { invite as reqInvite } from './../../api/invite';
+import reqApi from './../../api/invite';
 
 const initalState = Immutable.fromJS({
     requestQuantity: 0,
@@ -54,17 +54,24 @@ export const actions = {
         type: types.INVITE_SUCCESS,
         inviteSuccess
     }),
-    sendInvite: (userName, email) => {
-        return dispatch => {
-            dispatch(startRequest());
-            const params = {userName, email};
-            return reqInvite(params).then(data => {
-                if(!data.error){
-                    dispatch(actions.inviteSuccess(data.status === 200));
-                    return;
-                }
-                dispatch(actions.setError(data.error));
-            })
+    sendInvite: (name, email) => {
+        return async dispatch => {
+            try {
+                dispatch(actions.startRequest());
+                const params = { name, email };
+                const response = await reqApi.invite(params);
+
+                dispatch(actions.finishRequest());
+                return response;
+                // if (!response.error) {
+                //     dispatch(actions.inviteSuccess(true));
+                //     return response;
+                // }
+                // dispatch(actions.setError(response.error));
+            } catch (e) {
+                console.log(e);
+            }
+
         }
     }
 }
@@ -73,19 +80,19 @@ export const actions = {
 const reducer = (state = initalState, action) => {
     switch (action.type) {
         case types.START_REQUEST:
-            return state.merge({ requestQuantity: state.get('requestQuantity') + 1});
+            return state.merge({ requestQuantity: state.get('requestQuantity') + 1 });
         case types.FINISH_REQUEST:
-            return state.merge({ requestQuantity: state.get('requestQuantity') - 1});
+            return state.merge({ requestQuantity: state.get('requestQuantity') - 1 });
         case types.SET_ERROR:
             return state.merge({ error: action.error });
         case types.REMOVE_ERROR:
             return state.merge({ error: null });
         case types.SHOW_INVITE:
-            return state.merge({ isInvite: action.isInvite});
+            return state.merge({ isInvite: action.isInvite });
         case types.CLOSE_INVITE:
-            return state.merge({ isInvite: false});
+            return state.merge({ isInvite: false });
         case types.INVITE_SUCCESS:
-            return state.merge({ inviteSuccess: action.inviteSuccess})
+            return state.merge({ inviteSuccess: action.inviteSuccess })
         default:
             return state;
     }
@@ -99,7 +106,7 @@ export const getError = state => {
 export const getShowInvite = state => {
     return state.getIn(['app', 'isInvite']);
 }
-export const inviteSuccess = state => {
+export const getInviteResult = state => {
     return state.getIn(['app', 'inviteSuccess']);
 }
 

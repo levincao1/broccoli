@@ -1,9 +1,9 @@
 /*
- * @Author: your name
+ * @Author: levin
  * @Date: 2022-02-02 21:56:09
- * @LastEditTime: 2022-02-02 22:07:03
+ * @LastEditTime: 2022-02-03 21:31:26
  * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: Request data
  * @FilePath: /broccoli/src/utils/request.js
  */
 const headers = new Headers({
@@ -11,20 +11,24 @@ const headers = new Headers({
     'Content-Type': 'application/json'
 })
 export const post = async function(url, data) {
-    return fetch(url, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(data)
-    }).then(res => {
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(data)
+        });
         return handleResponse(url, res);
-    }).catch(err => {
-        return { error: { message: 'Request failed.'}};
-    })
+    } catch (err) {
+        return { error: { message: 'Request failed.' } };
+    }
 }
 
-function handleResponse(url, res) {
-    if(res.status < 500) {
-        return res.json();
+async function handleResponse(url, res) {
+    if(res.status === 200) {
+        return await res.json();
+    } else if(res.status === 400){
+        let result = await res.json();
+        return {error: {message: result.errorMessage}}
     }
     return { error: {message: 'Request failed due to server error'}};
 }
