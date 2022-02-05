@@ -1,7 +1,7 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 15:43:58
- * @LastEditTime: 2022-02-05 11:18:02
+ * @LastEditTime: 2022-02-05 21:03:01
  * @LastEditors: Please set LastEditors
  * @Description: Login component
  * @FilePath: /broccoli/src/components/Login/index.js
@@ -17,7 +17,7 @@ const initialState = {
     error: '',
     inviting: false
 }
-class Invite extends Component {
+export class Invite extends Component {
     constructor(props) {
         super(props);
         this.title = 'Request an invite';
