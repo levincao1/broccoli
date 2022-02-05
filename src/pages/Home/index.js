@@ -1,30 +1,32 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 12:08:06
- * @LastEditTime: 2022-02-03 22:01:59
+ * @LastEditTime: 2022-02-05 11:44:47
  * @LastEditors: Please set LastEditors
  * @Description: Home page
  * @FilePath: /broccoli/src/pages/Home/index.js
  */
 import { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Invite from './../../components/Invite';
 import Toast from './../../components/Toast';
-import { actions as authActions, getShowInvite, getLoggedUser, getError } from '../../redux/modules/app';
 import './Home.scss';
 
-const defaultState = {
-    showInviteDialog: false,
-    error: null
-}
+const initialState = {
+    // The status of invite dialog display
+    showInviteDialog: false
+};
 class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ...defaultState
+            ...initialState
         }
     }
+    /**
+     * Show the invite dialog event
+     * @param {*} e 
+     * @returns 
+     */
     handleShowInvite = e => {
         e.preventDefault();
         if (this.state.showInviteDialog) {
@@ -32,18 +34,12 @@ class Home extends Component {
         }
         this.setState({
             showInviteDialog: true
-        })
-        // this.props.showInvite(true);
-        // const showInvite = !this.state.showInvite;
-        // Toast.show({
-        //     title: 'All done!',
-        //     content: 'You will be one of the first to experience Broccoli & Co. when we launch',
-        //     onClose: () => {
-        //         console.log('close the toast');
-        //     }
-        // });
+        });
     }
 
+    /**
+     * Send invite request successful
+     */
     handleInviteSuccess = () => {
         this.setState({
             showInviteDialog: false
@@ -56,10 +52,12 @@ class Home extends Component {
                     console.log('close the toast');
                 }
             });
-        }, 500)
-        
+        }, 500);  
     }
 
+    /**
+     * Close the invite dialog event
+     */
     handleCloseInvite = () => {
         this.setState({
             showInviteDialog: false
@@ -77,15 +75,4 @@ class Home extends Component {
         );
     }
 }
-const mapStateToProps = (state, props) => {
-    return {
-        isInvite: getShowInvite(state),
-        error: getError(state)
-    };
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        ...bindActionCreators(authActions, dispatch)
-    };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

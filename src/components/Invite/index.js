@@ -1,7 +1,7 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 15:43:58
- * @LastEditTime: 2022-02-03 22:04:00
+ * @LastEditTime: 2022-02-05 11:18:02
  * @LastEditors: Please set LastEditors
  * @Description: Login component
  * @FilePath: /broccoli/src/components/Login/index.js
@@ -10,7 +10,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { is, fromJS } from 'immutable';
-import { actions, getError } from "../../redux/modules/app";
+import { actions, getError } from "./../../redux/modules/app";
 import './Invite.scss';
 
 const initialState = {

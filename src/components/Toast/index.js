@@ -1,9 +1,9 @@
 /*
- * @Author: your name
+ * @Author: levin
  * @Date: 2022-02-03 10:51:39
- * @LastEditTime: 2022-02-03 19:37:25
+ * @LastEditTime: 2022-02-05 11:45:40
  * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: Popup dialog
  * @FilePath: /broccoli/src/components/Toast/index.js
  */
 import React, { Component } from 'react';
