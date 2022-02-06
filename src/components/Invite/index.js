@@ -1,7 +1,7 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 15:43:58
- * @LastEditTime: 2022-02-06 11:43:47
+ * @LastEditTime: 2022-02-06 12:18:18
  * @LastEditors: Please set LastEditors
  * @Description: Login component
  * @FilePath: /broccoli/src/components/Login/index.js
@@ -71,6 +71,9 @@ export class Invite extends Component {
             inviting: true
         })
         try {
+            if(!this.props.sendInvite) {
+                return;
+            }
             const res = await this.props.sendInvite(userName, email);
             if(!res.error){
                 this.setState({
