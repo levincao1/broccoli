@@ -1,7 +1,7 @@
 /*
  * @Author: levin
  * @Date: 2022-02-02 15:43:58
- * @LastEditTime: 2022-02-05 21:03:01
+ * @LastEditTime: 2022-02-06 11:43:47
  * @LastEditors: Please set LastEditors
  * @Description: Login component
  * @FilePath: /broccoli/src/components/Login/index.js
@@ -110,7 +110,7 @@ export class Invite extends Component {
                     <form className="invite-form" onSubmit={this.handleInvite}>
                         <input type="text" className="from-field" name="username" id="uname" placeholder='Full name' ref={input => { this.userName = input }}></input>
                         <input type="text" className="from-field" name="email" id="email" placeholder='Email' ref={input => { this.email = input }}></input>
-                        <input type="text" className="from-field" name="email" id="email" placeholder='Confirm email' ref={input => { this.confirmEmail = input }}></input>
+                        <input type="text" className="from-field" name="confirmEmail" id="confirmEmail" placeholder='Confirm email' ref={input => { this.confirmEmail = input }}></input>
                         <button className="from-field btn-submit" disabled={this.state.inviting}>{this.state.inviting? 'Sending, please wait...' : 'Send'}</button>
                         <p className="msg-error">{this.state.error}</p>
                     </form>
